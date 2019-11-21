@@ -5,6 +5,8 @@ from keras.layers import Conv2D, MaxPooling2D
 from keras.layers.merge import add
 from keras import regularizers
 
+# Import resnet from keras
+from keras.applications.resnet50 import ResNet50
 
 
 def resnet8(img_width, img_height, img_channels, output_dim):
@@ -88,6 +90,53 @@ def resnet8(img_width, img_height, img_channels, output_dim):
 
     # Define steering-collision model
     model = Model(inputs=[img_input], outputs=[steer, coll])
+    print(model.summary())
+
+    return model
+
+
+def resnet50(img_width, img_height, img_channels, output_dim):
+    """
+    Define model architecture.
+    
+    # Arguments
+       img_width: Target image widht.
+       img_height: Target image height.
+       img_channels: Target image channels.
+       output_dim: Dimension of model output.
+       
+    # Returns
+       model: A Model instance.
+    """
+
+    # Input
+    #img_input = Input(shape=(img_height, img_width, img_channels))
+    
+    base_model = ResNet50(weights='imagenet',
+                        include_top=False,
+                        input_shape=(img_height, img_width, 3))
+
+    # Disbaling trainability of resnet feature extraction layers
+    for layer in base_model.layers:
+        layer.trainable = False
+    
+    # Printing model summary
+    print(base_model.summary())
+    
+    x7 = base_model.output
+    x = Flatten()(x7)
+    x = Activation('relu')(x)
+    x = Dropout(0.5)(x)
+
+    # Steering channel
+    steer = Dense(output_dim)(x)
+
+    # Collision channel
+    coll = Dense(output_dim)(x)
+    coll = Activation('sigmoid')(coll)
+
+    # Define steering-collision model
+    model = Model(inputs=base_model.input, outputs=[steer, coll])
     print(model.summary())
 
     return model
