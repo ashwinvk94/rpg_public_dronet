@@ -16,23 +16,22 @@ from keras.optimizers import Adam
 import utils
 from common_flags import FLAGS
 def _main():
-    print('inside')
+    if not os.path.exists(FLAGS.experiment_rootdir):
+        os.makedirs(FLAGS.experiment_rootdir)
     base_model=MobileNet(weights='imagenet',include_top=False) #imports the mobilenet model and discards the last 1000 neuron layer.
 
     # Print mobilenet summary
-    print(base_model.summary())
 
     x=base_model.output
     x=GlobalAveragePooling2D()(x)
     x=Dense(1024,activation='relu')(x) #we add dense layers so that the model can learn more complex functions and classify for better results.
     x=Dense(1024,activation='relu')(x) #dense layer 2
     x=Dense(512,activation='relu')(x) #dense layer 3
-    preds=Dense(2,activation='softmax')(x) #final layer with softmax activation
+    preds=Dense(1,activation='softmax')(x) #final layer with softmax activation
 
     model=Model(inputs=base_model.input,outputs=preds)
 
     # Print mobilenet summary
-    print(model.summary())
     for i,layer in enumerate(model.layers[:(len(model.layers)-4)]):
             print('Setting as non-trainable',i,layer.name)
             layer.trainable=False
@@ -65,7 +64,22 @@ def _main():
                                                     target_size=(img_width, img_height),
                                                     crop_size=(crop_img_height, crop_img_width),
                                                     batch_size = FLAGS.batch_size)
+    
+    # Serialize model into json
+    json_model_path = os.path.join(FLAGS.experiment_rootdir, FLAGS.json_model_fname)
+    utils.modelToJson(model, json_model_path)
+    
+    initial_epoch = FLAGS.initial_epoch
+    
+    model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
+    step_size_train=train_generator.samples//FLAGS.batch_size
+    print(train_generator.ground_truth)
+   ''' 
+    model.fit_generator(generator=train_generator,
+                        steps_per_epoch=step_size_train,
+                        epochs=FLAGS.epochs)
+    '''
 def main(argv):
     # Utility main to load flags
     print('started')
