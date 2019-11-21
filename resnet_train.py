@@ -27,9 +27,10 @@ def _main():
     x=Dense(1024,activation='relu')(x) #we add dense layers so that the model can learn more complex functions and classify for better results.
     x=Dense(1024,activation='relu')(x) #dense layer 2
     x=Dense(512,activation='relu')(x) #dense layer 3
-    preds=Dense(1,activation='softmax')(x) #final layer with softmax activation
+    steering=Dense(1,activation='softmax')(x) #final layer with softmax activation
+    collision=Dense(1,activation='softmax')(x) #final layer with softmax activation
 
-    model=Model(inputs=base_model.input,outputs=preds)
+    model=Model(inputs=base_model.input,outputs=[steering,collision])
 
     # Print mobilenet summary
     for i,layer in enumerate(model.layers[:(len(model.layers)-4)]):
@@ -73,13 +74,16 @@ def _main():
     
     model.compile(optimizer='Adam',loss='categorical_crossentropy',metrics=['accuracy'])
 
-    step_size_train=train_generator.samples//FLAGS.batch_size
-    print(train_generator.ground_truth)
-   ''' 
-    model.fit_generator(generator=train_generator,
+    #step_size_train=train_generator.samples//FLAGS.batch_size
+    step_size_train = int(np.ceil(train_generator.samples / FLAGS.batch_size))
+    validation_steps = int(np.ceil(val_generator.samples / FLAGS.batch_size))
+    model.fit_generator(train_generator,
                         steps_per_epoch=step_size_train,
-                        epochs=FLAGS.epochs)
-    '''
+                        epochs=FLAGS.epochs,
+                        validation_data=val_generator,
+                        validation_steps = validation_steps,
+                        initial_epoch=initial_epoch)
+    
 def main(argv):
     # Utility main to load flags
     print('started')
