@@ -123,10 +123,16 @@ python cnn.py --restore_model=True --experiment_rootdir='./model' --weights_fnam
 ```
 The pre-trained model must be in the directory you indicate in ```--experiment_rootdir```.
 
-3. Train data using resnet. Note: Place the datasets in the directory as per the below command:
+3. Train data using resnet50. Note: Place the datasets in the directory as per the below command:
+```
+python3 cnn.py --experiment_rootdir='./model/test_1' --train_dir='../datasets/collision_dataset/training' --val_dir='../datasets/collision_dataset/validation' --batch_size=16 --epochs=150 --log_rate=25  --img_mode='rgb'
+```
+
+4. Train data using mobilenet. Note: Place the datasets in the directory as per the below command:
 ```
 python3 resnet_train.py --train_dir='../datasets/collision_dataset/training' --val_dir='../datasets/collision_dataset/validation' --batch_size=16 --img_mode='rgb' --img_width=320 --img_height=240 --crop_img_width=200 --crop_img_height=200
 ```
+
 
 ### Evaluating DroNet
 We evaluate our model on the testing data from each dataset.
