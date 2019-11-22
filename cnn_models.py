@@ -90,7 +90,7 @@ def resnet8(img_width, img_height, img_channels, output_dim):
 
     # Define steering-collision model
     model = Model(inputs=[img_input], outputs=[steer, coll])
-    print(model.summary())
+    # print(model.summary())
 
     return model
 
@@ -121,7 +121,17 @@ def resnet50(img_width, img_height, img_channels, output_dim):
         layer.trainable = False
     
     # Printing model summary
-    print(base_model.summary())
+    # print(base_model.summary())
+    
+    '''
+    for layer in base_model.layers:
+        # check for convolutional layer
+        if ('Conv2D' not in layer.__class__.__name__):
+            continue
+        # get filter weights
+        filters, biases = layer.get_weights()
+        print(layer.name, filters.shape)
+    ''' 
     
     x7 = base_model.output
     x = Flatten()(x7)
@@ -137,6 +147,6 @@ def resnet50(img_width, img_height, img_channels, output_dim):
 
     # Define steering-collision model
     model = Model(inputs=base_model.input, outputs=[steer, coll])
-    print(model.summary())
+    # print(model.summary())
 
     return model
