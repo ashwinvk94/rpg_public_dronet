@@ -148,6 +148,7 @@ def _main():
     else:
         # In this case weigths will start from the specified model
         initial_epoch = FLAGS.initial_epoch
+    
 
     # Define model
     model = getModel(crop_img_width, crop_img_height, img_channels,
