@@ -119,6 +119,15 @@ Finally, merge the ```training/```, ```validation/``` and ```testing/``` directo
 
 
 ### Training DroNet
+
+#### Screen usage
+Use screen to train on google cloud. Basic usage of screen is shown below:
+* type `screen` Then start the process you want.
+* Press Ctrl-A then Ctrl-D. This will detach your screen session but leave your processes running.
+* If you want to come back later, log on again and type screen -r This will resume your screen session, and you can see the output of your process.
+
+#### Training the network
+
 1. Train DroNet from scratch:
 ```
 python cnn.py [flags]
