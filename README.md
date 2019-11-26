@@ -1,3 +1,9 @@
+## To-Do
+
+1. Understand evaluation.py
+2. Understand loss -> there are many types of losses..what are each?
+3. why is loss going to zero initial itself?!!
+
 # DroNet: Learning to fly by driving
 This repository contains the code used to train and evaluate DroNet, a convolutional neural network that can safely drive a drone along the streets of a city.
 
