@@ -4,6 +4,19 @@
 2. Understand loss -> there are many types of losses..what are each?
 3. why is loss going to zero initial itself?!!
 
+
+## Google Cloud command cheatsheet
+ssh into instance:
+```
+gcloud compute ssh --project united-embassy-256622 --zone us-central1-c niket_shah2806@instance-2
+```
+
+copy instance remote directory to local directory:
+```
+gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:[remote_dir] [local_dir]
+eg: gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:~/datasets ~/Academics/cmsc_828I/datasets 
+```
+
 # DroNet: Learning to fly by driving
 This repository contains the code used to train and evaluate DroNet, a convolutional neural network that can safely drive a drone along the streets of a city.
 
@@ -24,19 +37,6 @@ Video: [YouTube](https://youtu.be/ow7aw9H4BcA)
 	journal = {{IEEE} Robotics and Automation Letters}
 }
 ```
-
-## Google Cloud command cheatsheet
-ssh into instance:
-```
-gcloud compute ssh --project united-embassy-256622 --zone us-central1-c niket_shah2806@instance-2
-```
-
-copy instance remote directory to local directory:
-```
-gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:[remote_dir] [local_dir]
-eg: gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:~/datasets ~/Academics/cmsc_828I/datasets 
-```
-
 
 ## Introduction
 Due to the danger that flying a drone can cause in an urban environment, collecting training data results impossible. For that reason, DroNet learns how to fly by imitating the behavior of manned vehicles that are already integrated in such environment. It produces a steering angle and a collision probability for the current input image captured by a forward-looking camera. Then, these high-level commands are transferred to control commands so that the drone keeps navigating, while avoiding obstacles.
