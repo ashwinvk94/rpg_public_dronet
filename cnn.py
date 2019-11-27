@@ -38,6 +38,8 @@ def getModel(img_width, img_height, img_channels, output_dim, weights_path):
             print("Loaded model from {}".format(weights_path))
         except:
             print("Impossible to find weight path. Returning untrained model")
+    else:
+        print("weights_path is None, i.e, restore model is False -> TRAINING FROM SCRATCH!")
 
     return model
 
