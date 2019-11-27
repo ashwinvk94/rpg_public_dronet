@@ -57,7 +57,8 @@ def trainModel(train_data_generator, val_data_generator, model, initial_epoch):
 
     # Initialize loss weights
     ##model.alpha = tf.Variable(1, trainable=False, name='alpha', dtype=tf.float32)
-    model.beta = tf.Variable(0, trainable=False, name='beta', dtype=tf.float32)
+    ##model.beta = tf.Variable(0, trainable=False, name='beta', dtype=tf.float32)
+    model.beta = tf.Variable(1, trainable=False, name='beta', dtype=tf.float32)
 
     # Initialize number of samples for hard-mining
     ##model.k_mse = tf.Variable(FLAGS.batch_size, trainable=False, name='k_mse', dtype=tf.int32)
@@ -70,7 +71,7 @@ def trainModel(train_data_generator, val_data_generator, model, initial_epoch):
     ##model.compile(loss=[utils.hard_mining_mse(model.k_mse),
     ##                    utils.hard_mining_entropy(model.k_entropy)],
     ##                    optimizer=optimizer, loss_weights=[model.alpha, model.beta])
-    model.compile(loss = [utils.hard_mining_entropy(model.k_entropy)], optimizer = optimizer, loss_weights = [model.beta])
+    model.compile(loss = utils.hard_mining_entropy(model.k_entropy), optimizer = optimizer)
 
 
     # Save model with the lowest validation loss
