@@ -82,14 +82,15 @@ def resnet8(img_width, img_height, img_channels, output_dim):
     x = Dropout(0.5)(x)
 
     # Steering channel
-    steer = Dense(output_dim)(x)
+    ##steer = Dense(output_dim)(x)
 
     # Collision channel
     coll = Dense(output_dim)(x)
     coll = Activation('sigmoid')(coll)
 
     # Define steering-collision model
-    model = Model(inputs=[img_input], outputs=[steer, coll])
+    ##model = Model(inputs=[img_input], outputs=[steer, coll])
+    model = Model(inputs=[img_input], outputs=[coll])
     # print(model.summary())
 
     return model
