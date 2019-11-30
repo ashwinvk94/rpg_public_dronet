@@ -1,3 +1,22 @@
+## To-Do
+
+1. Understand evaluation.py
+2. Understand loss -> there are many types of losses..what are each?
+3. why is loss going to zero initial itself?!!
+
+
+## Google Cloud command cheatsheet
+ssh into instance:
+```
+gcloud compute ssh --project united-embassy-256622 --zone us-central1-c niket_shah2806@instance-2
+```
+
+copy instance remote directory to local directory:
+```
+gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:[remote_dir] [local_dir]
+eg: gcloud compute scp --recurse --project united-embassy-256622 --zone us-central1-c instance-2:~/datasets ~/Academics/cmsc_828I/datasets 
+```
+
 # DroNet: Learning to fly by driving
 This repository contains the code used to train and evaluate DroNet, a convolutional neural network that can safely drive a drone along the streets of a city.
 
@@ -138,6 +157,15 @@ Finally, merge the ```training/```, ```validation/``` and ```testing/``` directo
 
 
 ### Training DroNet
+
+#### Screen usage
+Use screen to train on google cloud. Basic usage of screen is shown below:
+* type `screen` Then start the process you want.
+* Press Ctrl-A then Ctrl-D. This will detach your screen session but leave your processes running.
+* If you want to come back later, log on again and type screen -r This will resume your screen session, and you can see the output of your process.
+
+#### Training the network
+
 1. Train DroNet from scratch:
 ```
 python cnn.py [flags]
@@ -157,7 +185,7 @@ The pre-trained model must be in the directory you indicate in ```--experiment_r
 
 3. Train data using resnet50. Note: Place the datasets in the directory as per the below command:
 ```
-python3 cnn.py --experiment_rootdir='./model/test_1' --train_dir='../datasets/collision_dataset/training' --val_dir='../datasets/collision_dataset/validation' --batch_size=16 --epochs=150 --log_rate=25  --img_mode='rgb'
+python3 cnn.py --experiment_rootdir='./model/<model_name>' --batch_size=16 --epochs=150 --log_rate=25  --img_mode='rgb'
 ```
 
 4. Train data using mobilenet. Note: Place the datasets in the directory as per the below command:
@@ -165,6 +193,11 @@ python3 cnn.py --experiment_rootdir='./model/test_1' --train_dir='../datasets/co
 python3 resnet_train.py --train_dir='../datasets/collision_dataset/training' --val_dir='../datasets/collision_dataset/validation' --batch_size=16 --img_mode='rgb' --img_width=320 --img_height=240 --crop_img_width=200 --crop_img_height=200
 ```
 
+### Plotting loss
+Run the follwoing command to plot the training and validation loss v/s the wpoch number:
+```
+python3 plot_loss.py --experiment_rootdir='./model/<model_name>'
+```
 
 ### Evaluating DroNet
 We evaluate our model on the testing data from each dataset.

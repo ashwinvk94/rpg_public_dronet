@@ -119,7 +119,7 @@ class DroneDirectoryIterator(Iterator):
 
     def _decode_experiment_dir(self, dir_subpath):
         # Load steerings or labels in the experiment dir
-        steerings_filename = os.path.join(dir_subpath, "sync_steering.txt")
+        steerings_filename = os.path.join(dir_subpath, "../sync_steering.txt")
         labels_filename = os.path.join(dir_subpath, "labels.txt")
 
         # Try to load steerings first. Make sure that the steering angle or the
@@ -130,8 +130,10 @@ class DroneDirectoryIterator(Iterator):
                                   delimiter=',', skiprows=1)
             exp_type = 1
         except OSError as e:
+            # print("\nDoes not contain steering ground truth values\n")
             # Try load collision labels if there are no steerings
             try:
+                # print("\nLoading only collision ground truth values\n")
                 ground_truth = np.loadtxt(labels_filename, usecols=0)
                 exp_type = 0
             except OSError as e:
@@ -210,7 +212,8 @@ class DroneDirectoryIterator(Iterator):
                 batch_coll[i,0] = 0.0
                 batch_coll[i,1] = self.ground_truth[index_array[i]]
 
-        batch_y = [batch_steer, batch_coll]
+        ##batch_y = [batch_steer, batch_coll]
+        batch_y = batch_coll
         return batch_x, batch_y
 
 

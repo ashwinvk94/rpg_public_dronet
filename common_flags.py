@@ -23,11 +23,11 @@ gflags.DEFINE_integer('initial_epoch', 0, 'Initial epoch to start training')
 # Files
 gflags.DEFINE_string('experiment_rootdir', "./model", 'Folder '
                      ' containing all the logs, model weights and results')
-gflags.DEFINE_string('train_dir', "../training", 'Folder containing'
+gflags.DEFINE_string('train_dir', "./datasets/collision_dataset/training", 'Folder containing'
                      ' training experiments')
-gflags.DEFINE_string('val_dir', "../validation", 'Folder containing'
+gflags.DEFINE_string('val_dir', "./datasets/collision_dataset/validation", 'Folder containing'
                      ' validation experiments')
-gflags.DEFINE_string('test_dir', "../testing", 'Folder containing'
+gflags.DEFINE_string('test_dir', "./datasets/collision_dataset/testing", 'Folder containing'
                      ' testing experiments')
 
 # Model
