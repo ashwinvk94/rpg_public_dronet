@@ -1,6 +1,38 @@
 # DroNet: Learning to fly by driving
 This repository contains the code used to train and evaluate DroNet, a convolutional neural network that can safely drive a drone along the streets of a city.
 
+## GCloud Commands
+Start instance:
+```
+
+```
+
+ssh into instance:
+```
+
+```
+enter conda environment:
+```
+source activate tf
+```
+stop instance:
+```
+
+```
+
+copy folder from local to remote instance:
+```
+gcloud compute scp --recurse [LOCAL_DIR] [INSTANCE_NAME]:[REMOTE_DIR]
+
+```
+
+check folder size in megabytes:
+```
+du -s -m [dir_name]
+```
+
+
+
 #### Citing
 
 If you use DroNet in an academic context, please cite the following publication:
