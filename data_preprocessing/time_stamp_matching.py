@@ -10,11 +10,12 @@ import re
 import os
 
 # Path to the data extracted from the Udacity dataset
-folder = None #"training"  or "testing"
+folder = '../../datasets/steering_dataset/Ch2_002' #"training"  or "testing"
 assert folder, "You should provide the dataset folder"
 experiments = glob.glob(folder + "/*")
 
-
+print(folder+"/*")
+print(experiments)
 def extractInfoFromFile(file_name):
     steer_stamps = []
     # Read file and extract time stamp
@@ -50,6 +51,8 @@ def getSyncSteering(fname, idx):
 # For every bag...
 for exp in experiments:
     # Read images
+    print(exp+"/images/*.png")
+    print('images',glob.glob(exp + "/images/*.png"))
     images = [os.path.basename(x) for x in glob.glob(exp + "/images/*.png")]
     im_stamps = []
     for im in images:
@@ -61,9 +64,12 @@ for exp in experiments:
     file_name = exp + "/interpolated.csv"
     steer_stamps = extractInfoFromFile(file_name)
 
+    print('im_stamps',im_stamps)
+    print('steer_stamps',steer_stamps)
     # Time-stamp matching between images and steerings
     match_stamp, match_idx = getMatching(im_stamps, steer_stamps)
     match_idx = np.array(match_idx)
+    print(match_idx)
     match_idx = match_idx[:,0]
 
     # Get matched commands
