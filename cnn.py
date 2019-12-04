@@ -30,7 +30,8 @@ def getModel(img_width, img_height, img_channels, output_dim, weights_path):
        model: A Model instance.
     """
     #model = cnn_models.resnet8(img_width, img_height, img_channels, output_dim)
-    model = cnn_models.resnet50(img_width, img_height, img_channels, output_dim)
+    #model = cnn_models.resnet50(img_width, img_height, img_channels, output_dim)
+    model = cnn_models.resnext50(img_width, img_height, img_channels, output_dim)
 
     if weights_path:
         try:
